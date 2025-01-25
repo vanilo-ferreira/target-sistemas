@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 03</title>
+</head>
+
+<body>
+
+    <p> 3) Dado um vetor que guarda o valor de faturamento diário de uma distribuidora, faça um programa, na linguagem
+        que desejar, que calcule e retorne:</p>
+    <li> O menor valor de faturamento ocorrido em um dia do mês;</li>
+    <li> O maior valor de faturamento ocorrido em um dia do mês; </li>
+    <li> Número de dias no mês em que o valor de faturamento diário foi superior à média mensal. </li>
+
+    <h4>IMPORTANTE:</h4>
+    <p> a) Usar o json ou xml disponível como fonte dos dados do faturamento mensal;</p>
+    <p> b) Podem existir dias sem faturamento, como nos finais de semana e feriados.</p>
+    <p> Estes dias devem ser ignorados no cálculo da média;</p>
+
+
+
+    <div id="empresa">
+
+    </div>
+
+    <div id="data">
+        
+    </div>
+
+    <script>
+        let divEmpresa = document.querySelector("#empresa")
+        let pData = document.querySelector("#data")
+
+
+        fetch("dados.json").then((response) => {
+            response.json().then((dados) => {
+                let highestValue = 0;
+                let lowestValue = dados[0].valor;
+                let totalSum = 0;
+                let daysNotBilled = 0;
+                let billedDays = 0;
+
+                for (var i = 0; i < dados.length; i++) {
+
+                    totalSum = totalSum + dados[i].valor;
+
+
+
+                    if (dados[i].valor > highestValue) {
+                        highestValue = dados[i].valor; // Atualiza o maior número
+                    }
+                    if (dados[i].valor < lowestValue && dados[i].valor > 0) {
+                        lowestValue = dados[i].valor; // Atualiza o menor número
+                    }
+
+                    if (dados[i].valor === 0) {
+                        daysNotBilled = daysNotBilled + 1; // Atualiza o menor número
+                    }
+
+                    divEmpresa.innerHTML += `
+                    <li> Dia: ${dados[i].dia} - Faturamento: ${dados[i].valor}`
+                }
+
+                billedDays = dados.length - daysNotBilled;
+
+                pData.innerHTML += `<p>O maior valor de faturamento: ${highestValue.toFixed(2)}<p>`
+                pData.innerHTML += `<p>O menor valor de faturamento: ${lowestValue.toFixed(2)}<p>`
+                pData.innerHTML += `<p>Soma Total: ${totalSum.toFixed(2)}<p>`
+                pData.innerHTML += `<p>Dias Zerados: ${daysNotBilled}<p>`
+                pData.innerHTML += `<p>Dias Faturados: ${billedDays}<p>`
+                pData.innerHTML += `<p>Média: ${(totalSum / billedDays).toFixed(2)}<p>`
+            })
+        })
+    </script>
+
+</body>
+
+</html>
