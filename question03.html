@@ -46,14 +46,14 @@
 
 
                     if (dados[i].valor > highestValue) {
-                        highestValue = dados[i].valor; // Atualiza o maior número
+                        highestValue = dados[i].valor;
                     }
                     if (dados[i].valor < lowestValue && dados[i].valor > 0) {
-                        lowestValue = dados[i].valor; // Atualiza o menor número
+                        lowestValue = dados[i].valor;
                     }
 
                     if (dados[i].valor === 0) {
-                        daysNotBilled = daysNotBilled + 1; // Atualiza o menor número
+                        daysNotBilled = daysNotBilled + 1;
                     }
 
                     divEmpresa.innerHTML += `
